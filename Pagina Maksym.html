@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vienvenidos a Sinnoh</title>
+    <style>
+        /* Importar fuente de Google Fonts y Iconos (Actualizados) */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Oswald:wght@700&family=Orbitron:wght@500;900&family=Share+Tech+Mono&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'); 
+
+        /* Variables de Color (Máximo Contraste Neón con Degradados y NUEVO: Glow Secundario) */
+        :root {
+            --color-fondo-oscuro: #000407;      /* Negro Absoluto */
+            --color-superficie-oscura: #0a111a; /* Base de la interfaz */
+            --color-acento-principal: #00e0ff;  /* CIAN Neón (Dialga/Espacio) */
+            --color-acento-secundario: #ffc800; /* AMARILLO Dorado Neón (Arceus/Mito) */
+            --color-enlace-neongreen: #00ff66;  /* VERDE Neón para Enlaces */
+            --color-texto-claro: #f0f8ff;       /* Blanco Fantasma */
+            --color-texto-gris: #a8b3c0;        /* Gris de Datos */
+            --glow-primary: 0 0 10px var(--color-acento-principal), 0 0 20px rgba(0, 224, 255, 0.4);
+            --glow-secondary: 0 0 10px var(--color-acento-secundario), 0 0 20px rgba(255, 200, 0, 0.4);
+            --glow-green: 0 0 10px var(--color-enlace-neongreen), 0 0 20px rgba(0, 255, 102, 0.5);
+            --glow-white: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        /*  ESTILOS BASE Y FONDO EXTENDIDO  */
+        html {
+            scroll-behavior: smooth; 
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-fondo-oscuro); 
+            background-image: 
+                radial-gradient(ellipse at 50% 10%, rgba(0, 224, 255, 0.08), transparent 70%), 
+                radial-gradient(ellipse at 90% 90%, rgba(255, 200, 0, 0.08), transparent 70%), 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="0.8" fill="%231a314d"/></svg>');
+            background-size: 100% 100%, 100% 100%, 30px 30px;
+            color: var(--color-texto-claro);
+            line-height: 1.6;
+            padding-bottom: 50px;
+            position: relative; 
+            overflow-x: hidden; 
+        }
+
+        /* Efecto de Scanlines Global  */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%), 
+                        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 100% 4px, 4px 100%, 100% 4px;
+            z-index: 9999;
+            opacity: 0.2;
+            animation: scanline-flicker 15s infinite linear;
+        }
+
+      
+
+        /* === Scrollbar de Alta Tecnología === */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { 
+            background: var(--color-fondo-oscuro); 
+            border-left: 1px solid var(--color-acento-principal);
+            box-shadow: inset 0 0 5px rgba(0, 224, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--color-acento-principal), var(--color-acento-secundario));
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.8), inset 0 0 4px rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--color-texto-claro); 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--color-acento-secundario), var(--color-acento-principal)); 
+        }
+        
+      
+
+
+        .container {
+            width: 95%; 
+            max-width: 1600px; 
+            margin: 50px auto; 
+            padding: 60px; 
+            background-color: rgba(10, 17, 26, 0.98); 
+            border-radius: 20px; 
+            border: 3px solid rgba(0, 224, 255, 0.3); 
+            box-shadow: 0 0 70px rgba(0, 0, 0, 0.95), inset 0 0 15px rgba(0, 224, 255, 0.1); 
+            position: relative;
+            overflow: hidden;
+            opacity: 0; 
+            transform: translateY(20px);
+            animation: fade-in-up 1.5s forwards ease-out 1.5s; 
+            z-index: 1; 
+        }
+/* Si se elimina esto se elimina todo*/
+        @keyframes fade-in-up {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            border: 2px solid var(--color-acento-principal);
+            border-radius: 20px;
+            box-shadow: var(--glow-primary);
+            pointer-events: none;
+            opacity: 0.7; 
+            animation: border-glow 4s infinite alternate ease-in-out;
+            z-index: 0; 
+        }
+
+        /* ENCABEZADO (Header)  */
+        header {
+            background: linear-gradient(135deg, #050b11, #000407); 
+            color: var(--color-texto-claro);
+            padding: 130px 0; 
+            text-align: center;
+            box-shadow: 0 18px 70px rgba(0, 0, 0, 0.98); 
+            border-bottom: 12px solid var(--color-acento-secundario); 
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            font-family: 'Orbitron', sans-serif; 
+            font-weight: 900;
+            font-size: 8em; 
+            letter-spacing: 18px; 
+            margin-bottom: 18px;
+            text-shadow: 
+                0 0 15px #fff, 
+                0 0 40px var(--color-acento-secundario), 
+                0 0 80px rgba(255, 200, 0, 0.9); 
+            transform: scale(1.0);
+            transition: transform 0.5s, text-shadow 0.3s;
+            position: relative;
+            display: inline-block; 
+        }
+
+        
+        header h1:hover {
+             transform: scale(1.05);
+             animation: glitch 0.8s infinite linear; 
+        }
+        header p {
+            font-family: 'Share Tech Mono', monospace; 
+            font-size: 2.8em; 
+            font-weight: 500;
+            opacity: 0.98; 
+            text-shadow: 0 0 12px var(--color-acento-principal), 0 0 20px rgba(0, 224, 255, 0.5); 
+            color: var(--color-acento-principal);
+            letter-spacing: 4px; 
+        }
+
+        /* BARRA DE NAVEGACIÓN  */
+        nav {
+            background-color: #050a10; 
+            padding: 22px 0; 
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.98); 
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Z-index alto para la barra de navegación */
+            border-bottom: 6px solid var(--color-acento-principal); 
+            text-align: center;
+        }
+        nav a {
+            color: var(--color-texto-claro); 
+            margin: 0 20px; 
+            text-decoration: none;
+            font-weight: 700; 
+            font-size: 1.3em; 
+            padding: 14px 30px; 
+            border-radius: 50px; 
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex; 
+            align-items: center;
+            z-index: 2; /* Z-index base para enlaces de nav */
+        }
+        /* Iconos de Navegación */
+        nav a i {
+            margin-right: 10px;
+            font-size: 1.1em;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Animación para iconos en hover */
+  
+        
+        nav a:hover i {
+            animation: jello-horizontal 0.9s both;
+            color: var(--color-acento-secundario); 
+        }
+
+        /* Animación de hover para los botones de navegación */
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 224, 255, 0.25), transparent); 
+            transition: 0.6s ease-out; 
+            z-index: 1;
+        }
+        nav a:hover::before {
+            left: 100%;
+        }
+        nav a:hover {
+            background: rgba(0, 224, 255, 0.08); 
+            color: var(--color-acento-principal); 
+            box-shadow: 0 0 25px var(--color-acento-principal), /* Glow más brillante */
+                        0 0 10px var(--color-acento-principal) inset; 
+            text-shadow: 0 0 10px var(--color-texto-claro), 
+                         0 0 20px var(--color-acento-principal); 
+            transform: translateY(-3px); 
+            border-color: var(--color-acento-principal); 
+            z-index: 100; /* Z-index MUY alto al hacer hover para que siempre esté encima */
+        }
+
+
+        /*TÍTULOS DE SECCIÓN (Holographico Projection) */
+       
+
+        section { 
+            padding: 90px 0; 
+            border-bottom: 2px dashed rgba(0, 224, 255, 0.15); 
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            /* Animación de entrada al hacer scroll */
+            animation: section-fade-in 1s forwards ease-out;
+            animation-timeline: view();
+            animation-range: entry 25% cover 50%;
+        }
+
+        @keyframes section-fade-in {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--color-acento-secundario); 
+            text-align: center;
+            margin-bottom: 90px; 
+            font-size: 6em; 
+            font-weight: 900;
+            text-shadow: var(--glow-secondary); 
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 18px 45px; 
+            border: 5px solid var(--color-acento-principal); 
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6); 
+            box-shadow: 0 0 25px rgba(255, 200, 0, 0.4); 
+            border-radius: 10px; 
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0, 224, 255, 0.15), 
+                rgba(0, 224, 255, 0.15) 12px,
+                transparent 12px,
+                transparent 24px
+            );
+            opacity: 0.4; 
+            animation: scan-line 5s linear infinite;
+        }
+
+        p {
+            font-family: 'Roboto', sans-serif;
+            color: var(--color-texto-gris);
+            text-align: center; 
+            font-size: 1.3em; 
+            text-shadow: 0 0 3px rgba(0, 224, 255, 0.15); 
+            margin-left: auto; 
+            margin-right: auto; 
+            max-width: 90%; 
+            transition: text-shadow 0.3s ease;
+        }
+        /* Efecto de brillo en párrafos al pasar el ratón */
+        p:hover {
+            text-shadow: var(--glow-primary);
+            color: var(--color-texto-claro);
+        }
+
+        /* Aumento de contraste para párrafos en tarjetas */
+        .data-panel-card p:not(.champion-card p) {
+            text-align: left; 
+            max-width: 100%;
+            color: var(--color-texto-claro); 
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); 
+        }
+
+        /* TARJETAS */
+        .data-panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 45px; 
+            margin-top: 50px;
+        }
+        
+        .data-panel-card {
+            background: linear-gradient(160deg, #101925, #0d141e); 
+            border: 2px solid rgba(0, 224, 255, 0.4); 
+            border-radius: 18px; 
+            padding: 40px; 
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.9), inset 0 0 8px rgba(255, 255, 255, 0.08); 
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; 
+            overflow: hidden; 
+            transform-style: preserve-3d; 
+            z-index: 5; /* Z-index base un poco más alto para las tarjetas */
+        }
+        
+        @keyframes glare-sweep {
+            0% { transform: skewX(-25deg) translateX(-150%); } 
+            100% { transform: skewX(-25deg) translateX(450%); } 
+        }
+
+        .data-panel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.15) 50%, 
+                transparent 100%
+            );
+            transform: skewX(-25deg) translateX(-150%); 
+            pointer-events: none;
+            opacity: 0; 
+            transition: opacity 0.3s;
+            z-index: 2; 
+        }
+
+        /* REDUCCIÓN DE SOMBRA PARA CONTRASTE INTERNO */
+        .data-panel-card:hover {
+            transform: translateY(-18px) scale(1.04) rotateX(2deg); 
+            /* AJUSTE CLAVE: box-shadow más sutil para evitar oscurecer el contenido interno */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.9), /* Sombra oscura para profundidad */
+                        0 0 40px rgba(0, 224, 255, 0.25); /* Glow principal más suave (25% opacidad) */
+            border-color: var(--color-acento-principal); 
+            z-index: 50; 
+        }
+
+        .data-panel-card:hover::before {
+            opacity: 1; 
+            animation: glare-sweep 1s ease-in-out; 
+        }
+        
+        /* MITOLOGÍA: AJUSTES LEGENDARIOS (Brillo Específico) */
+        .myth-box h3 {
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 2.2em; 
+            padding-bottom: 15px;
+            border-bottom: 6px double; 
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .arceus-box.data-panel-card { border: 4px solid var(--color-acento-secundario); background-color: #242111; }
+        .arceus-box h3 { 
+            color: var(--color-acento-secundario); 
+            text-shadow: var(--glow-secondary); 
+            border-bottom-color: var(--color-acento-secundario); 
+            animation: text-flicker-secondary 3s infinite alternate; 
+        }
+        .arceus-box.data-panel-card:hover {
+            box-shadow: 0 0 40px var(--color-fondo-oscuro), var(--glow-secondary); 
+            border-color: var(--color-acento-secundario);
+        }
+
+        @keyframes text-flicker-secondary {
+            0%, 100% { text-shadow: var(--glow-secondary); }
+            50% { text-shadow: 0 0 8px var(--color-acento-secundario), 0 0 15px rgba(255, 200, 0, 0.7); }
+        }
+
+        .dialga-palkia-box.data-panel-card { border: 4px solid var(--color-acento-principal); background-color: #152233; }
+        .dialga-palkia-box h3 { 
+            color: var(--color-acento-principal); 
+            text-shadow: var(--glow-primary); 
+            border-bottom-color: var(--color-acento-principal); 
+            animation: text-flicker-primary 3s infinite alternate; 
+        }
+        @keyframes text-flicker-primary {
+            0%, 100% { text-shadow: var(--glow-primary); }
+            50% { text-shadow: 0 0 8px var(--color-acento-principal), 0 0 15px rgba(0, 224, 255, 0.7); }
+        }
+
+
+        .lake-trio-box.data-panel-card { border: 4px solid #32cd32; background-color: #1a2a1a; }
+        .lake-trio-box h3 { color: #32cd32; text-shadow: 0 0 18px #32cd32; border-bottom-color: #32cd32; }
+        .lake-trio-box.data-panel-card:hover {
+            box-shadow: 0 0 40px var(--color-fondo-oscuro), 0 0 12px #32cd32, 0 0 25px rgba(50, 205, 50, 0.5); 
+            border-color: #32cd32;
+        }
+
+        .giratina-box.data-panel-card { 
+            border: 4px solid #a9a9a9; 
+            background-color: #1c1c1c; 
+        }
+        .giratina-box h3 { color: var(--color-texto-claro); text-shadow: 0 0 18px #a9a9a9; border-bottom-color: #a9a9a9; }
+        
+        @keyframes ominous-glow {
+            0%, 100% { box-shadow: 0 0 18px rgba(169, 169, 169, 0.6); } 
+            50% { box-shadow: 0 0 60px rgba(169, 169, 169, 1), 0 0 80px rgba(0, 0, 0, 0.9); } 
+        }
+        .giratina-box.data-panel-card:hover { 
+            transform: scale(1.05) translateY(-10px) rotateX(-2deg); 
+            animation: ominous-glow 1.5s infinite ease-in-out; 
+            border-color: #fff; 
+            z-index: 55; /* Z-index un poco más alto para Giratina */
+        }
+
+        /* === GIMNASIOS Y LIGA === */
+        
+        .gym-card, .league-card {
+            background-color: #0d141e; 
+            border-radius: 12px;
+            padding: 30px 25px; 
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+            border-bottom: 6px solid var(--color-acento-secundario); 
+            transition: all 0.5s; 
+            min-height: 180px; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between; 
+            position: relative;
+            z-index: 5; /* Z-index base para gym/league cards */
+        }
+
+        .gym-card:hover {
+            transform: scale(1.06) translateY(-10px); 
+            box-shadow: 0 0 45px var(--color-acento-principal), 0 0 15px rgba(0, 224, 255, 0.5) inset; /* Sombra/glow más brillante y con un inset */
+            border-bottom-color: var(--color-acento-principal);
+            z-index: 50;
+        }
+
+        .gym-card h4, .league-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--color-texto-claro);
+            margin: 8px 0 15px 0; 
+            font-size: 1.8em; 
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Títulos de Plataforma (Videojuegos) */
+        #videojuegos .data-panel-card h4 {
+            font-size: 1.7em; 
+            word-break: break-word; 
+            line-height: 1.2;
+        }
+
+        @keyframes pulse-neon {
+            0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 102, 0.8); }
+            50% { box-shadow: 0 0 15px rgba(0, 255, 102, 1); }
+        }
+
+        /* Ajustes de badge para asegurar altura y texto completo (Gimnasios/Liga) */
+        .gym-type-badge {
+            font-family: 'Share Tech Mono', monospace;
+            display: inline-block;
+            padding: 7px 18px; 
+            border-radius: 50px;
+            font-size: 1em; 
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            margin-top: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.4); 
+            transition: all 0.3s;
+            line-height: 1.2; 
+            height: auto;
+            align-self: center; 
+        }
+
+        .gym-type-badge:hover {
+             animation: pulse-neon 1s infinite alternate;
+             border-color: var(--color-enlace-neongreen);
+        }
+        
+        /* Estilos de Insignia de Tipo (Colores) */
+        .type-rock { background-color: #8B4513; color: #fff; }
+        .type-grass { background-color: #4CAF50; color: #000; }
+        .type-ghost { background-color: #6A5ACD; color: #fff; }
+        .type-water { background-color: #2196F3; color: #fff; }
+        .type-fighting { background-color: #D32F2F; color: #fff; }
+        .type-steel { background-color: #B0C4DE; color: #000; }
+        .type-ice { background-color: #87CEEB; color: #000; }
+        .type-electric { background-color: #FFEB3B; color: #000; }
+        .type-bug { background-color: #9CCC65; color: #000; }
+        .type-ground { background-color: #D2B48C; color: #000; }
+        .type-fire { background-color: #FF9800; color: #fff; }
+        .type-psychic { background-color: #FF69B4; color: #fff; }
+        .type-mixed { background-color: #767676; color: #fff; } 
+
+
+        /* LIGA POKÉMON (Ajustes Específicos) */
+        .league-card {
+            border: 4px solid var(--color-acento-principal);
+        }
+        .league-card:hover {
+            box-shadow: 0 0 40px var(--color-acento-secundario), 0 0 20px var(--color-acento-principal) inset; 
+            transform: translateY(-12px) scale(1.03);
+            border-color: var(--color-acento-secundario);
+            z-index: 50;
+        }
+
+        .champion-card {
+            grid-column: 1 / -1; 
+            background: linear-gradient(135deg, #443c22, #685d30); 
+            border: 10px solid var(--color-acento-secundario); 
+            box-shadow: 0 0 80px var(--color-acento-secundario); 
+            padding: 50px;
+            z-index: 5;
+        }
+        .champion-card:hover {
+            transform: scale(1.03) translateY(-15px);
+            box-shadow: 0 0 120px var(--color-acento-secundario), 
+                        0 0 40px rgba(255, 255, 255, 0.5); /* Glow O Brillo más prominente */
+            z-index: 60; /* Z-index aún más alto para la campeona */
+        }
+        .champion-card h4 {
+            font-size: 3.5em !important; 
+            color: var(--color-acento-secundario) !important;
+            text-shadow: var(--glow-secondary);
+            margin-bottom: 20px;
+        }
+        .champion-card p {
+            color: var(--color-texto-claro) !important;
+            text-align: center; 
+        }
+        
+        /* Animación para el icono de la campeona */
+        @keyframes crown-pulse {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+        .champion-card h4 i {
+            animation: crown-pulse 3s infinite ease-in-out;
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+
+        /* === AJUSTES DE ENLACES (GREEN NEON POWER) - Z-Index Asegurado === */
+        
+        .structure-card strong a {
+            color: var(--color-enlace-neongreen); 
+            text-decoration: none;
+            text-shadow: var(--glow-green); 
+            transition: color 0.3s, text-shadow 0.3s, transform 0.2s;
+            display: inline-block;
+            position: relative;
+            z-index: 6; 
+        }
+        .structure-card strong a:hover {
+            color: var(--color-acento-secundario); 
+            text-decoration: underline;
+            text-shadow: var(--glow-secondary); 
+            transform: scale(1.05);
+            z-index: 60; 
+        }
+
+        .gym-card a, .league-card a, .champion-card a, .data-panel-card a {
+            color: var(--color-enlace-neongreen); 
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            padding: 3px 8px; 
+            border-bottom: 2px dotted var(--color-enlace-neongreen); 
+            position: relative;
+            z-index: 6; 
+            text-shadow: var(--glow-green); /* Aseguramos que brille de base */
+        }
+        
+        /* Contraste para Enlaces en Hover */
+        .gym-card a:hover, .league-card a:hover, .champion-card a:hover, .data-panel-card a:hover {
+            color: #fff; /* CAMBIO CLAVE: Color a Blanco puro para el máximo contraste */
+            text-shadow: 0 0 10px var(--color-acento-secundario), 0 0 25px var(--color-acento-secundario), 0 0 40px rgba(255, 200, 0, 0.8); /* Aumento de brillo y extensión */
+            border-bottom-color: var(--color-acento-secundario);
+            border-radius: 0;
+            transform: translateY(-1px);
+            z-index: 999; /* Z-INDEX MÁXIMO para asegurar la visibilidad */
+        }
+
+        /* Línea de evolución (texto de enlace dentro de la tarjeta) */
+        .evolution-line a {
+            color: var(--color-enlace-neongreen);
+            text-decoration: none; 
+            border-bottom: 2px solid rgba(0, 255, 102, 0.3); 
+            text-shadow: var(--glow-green);
+        }
+        .evolution-line a:hover {
+             color: var(--color-acento-secundario);
+             text-shadow: var(--glow-secondary);
+             border-bottom-color: var(--color-acento-secundario);
+        }
+
+        /* AJUSTES ESPECÍFICOS DE INICIALES*/
+        .starter-card {
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            min-height: 350px; 
+        }
+
+        .starter-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--color-texto-claro);
+            font-size: 1.6em; 
+            margin-bottom: 5px;
+        }
+
+        .starter-card p {
+            color: var(--color-texto-gris);
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        /* Ajuste de badge para iniciales */
+        .starter-type-badge {
+            font-family: 'Share Tech Mono', monospace;
+            display: inline-block;
+            padding: 6px 15px; 
+            border-radius: 50px;
+            font-size: 0.9em; 
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            margin: 10px 0;
+            line-height: 1.2; 
+            height: auto;
+            width: fit-content;
+            color: #fff;
+        }
+        
+        .type-fire-starter { background-color: #FF9800; }
+        .type-water-starter { background-color: #2196F3; }
+        .type-grass-starter { background-color: #4CAF50; }
+
+        .evolution-line {
+            font-weight: bold;
+            color: var(--color-acento-secundario);
+            font-size: 1.2em;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #050a10;
+            color: var(--color-texto-gris);
+            padding: 60px 0; 
+            text-align: center;
+            font-size: 1.3em;
+            border-top: 10px double var(--color-acento-secundario); 
+            box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.98);
+            font-family: 'Share Tech Mono', monospace;
+            text-shadow: 0 0 5px rgba(255, 200, 0, 0.5);
+        }
+        
+        
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="loader-text">INICIANDO PROTOCOLO SINNOH...</div>
+    </div>
+
+    <header>
+        <h1>SINNOH</h1>
+        <p>[DATOS CÓSMICOS: ORIGEN Y MITOLOGÍA]</p>
+    </header>
+
+    <nav>
+        <a href="index.html"><i class="fas fa-microchip"></i>Volver al inicio</a>
+        <a href="#introduccion"><i class="fas fa-microchip"></i> Introducción</a>
+        <a href="#geografia"><i class="fas fa-mountain"></i> Geografía</a>
+        <a href="#mitologia"><i class="fas fa-galaxy"></i> Mitología</a>
+        <a href="#gym-structure"><i class="fas fa-puzzle-piece"></i> Estructura</a>
+        <a href="#gym-leaders"><i class="fas fa-fist-raised"></i> Líderes</a>
+        <a href="#league"><i class="fas fa-crown"></i> Liga Pokémon</a>
+        <a href="#videojuegos"><i class="fas fa-gamepad"></i> Videojuegos</a>
+        <a href="#starters"><i class="fas fa-seedling"></i> Iniciales</a>
+    </nav>
+
+    <div class="container">
+
+        <section id="introduccion">
+            <h2><i class="fas fa-terminal"></i> INTRODUCCIÓN A SINNOH</h2>
+            <p><span style="color: var(--color-acento-principal); font-weight: bold;">[ANÁLISIS DE ORIGEN]</span> La región de Sinnoh, modelada en <strong style="color: var(--color-texto-claro);">Hokkaidō, Japón</strong>, es el <strong>eje mitológico</strong> del universo Pokémon. Su nombre, que resuena con la idea de <strong style="color: var(--color-acento-secundario);">"misterio y deidad"</strong>, establece su rol como el punto de partida temporal (<strong style="color: var(--color-acento-principal);">Hisui</strong>). La Cuarta Generación consolidó la transición a la era semi-3D, impulsando innovaciones críticas como el <strong>Sistema Global de Comercio</strong> y la <strong>División de Ataques</strong> por propiedad física/especial, redefiniendo el metajuego competitivo.</p>
+        </section>
+
+        <section id="geografia">
+            <h2><i class="fas fa-map-marked-alt"></i> GEOGRAFÍA Y CLIMA</h2>
+            <p style="font-style: italic; font-size: 1.3em; color: var(--color-acento-principal);">El diseño topográfico está dominado por un clima frío y una estructura orográfica central.</p>
+            <div class="data-panel-grid">
+                
+                <div class="data-panel-card">
+                    <strong><i class="fas fa-chart-bar"></i> Parámetros Regionales (Route/Dex):</strong>
+                    <p>Conexión vía <strong>30 Rutas</strong> (201 a 230). El índice regional original compila <strong style="color: var(--color-acento-secundario);">151 especies únicas</strong>. La matriz urbana incluye <strong style="color: var(--color-acento-principal);">14 núcleos de población</strong> principales.</p>
+                </div>
+
+                <div class="data-panel-card">
+                    <strong><i class="fas fa-mountain"></i> Monte Corona (Eje Dimensional):</strong>
+                    <p>Funciona como un <strong>portal dimensional</strong> y un punto de sacrificio mítico. Su cima, la <strong>Columna Lanza</strong>, es el nexo de invocación de Dialga/Palkia.</p>
+                </div>
+
+                <div class="data-panel-card">
+                    <strong><i class="fas fa-snowflake"></i> Clima Dominante y Biomas:</strong>
+                    <p>Sinnoh introdujo la <strong style="color: var(--color-acento-principal);">nieve perpetua</strong>. Los biomas más densos son las <strong>Grutas</strong> y la <strong>Tundra Glacial</strong>, confirmando su latitud septentrional.</p>
+                </div>
+                
+                <div class="data-panel-card">
+                    <strong><i class="fas fa-globe-europe"></i> Lagos del Espíritu (Sellos):</strong>
+                    <p>Valor, Veraz y Agudeza no son solo cuerpos de agua, son los sellos de las tres fuerzas del espíritu: <strong>Voluntad, Emoción y Conocimiento</strong> (Uxie, Mesprit, Azelf).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="mitologia">
+            <h2><i class="fas fa-hat-wizard"></i> EL PANTEÓN DE LA CREACIÓN</h2>
+            <p style="font-style: italic; font-size: 1.3em; color: var(--color-acento-secundario);">Las entidades primarias que estructuran el tiempo, el espacio y la conciencia.</p>
+            
+            <div class="data-panel-grid">
+                
+                <div class="data-panel-card myth-box arceus-box">
+                    <h3><i class="fas fa-star"></i> <a href="https://www.pokemon.com/es/pokedex/arceus" target="_blank">ARCEUS: EL ALFA</a></h3>
+                    <p>Creador mediante <strong style="color: var(--color-texto-claro);">18 Placas</strong>. Representa el <strong>Origen Absoluto</strong>. Su mito es el núcleo de los pergaminos de Hisui.</p>
+                </div>
+                
+                <div class="data-panel-card myth-box dialga-palkia-box">
+                    <h3>
+                        <a href="https://www.pokemon.com/es/pokedex/dialga" target="_blank">DIALGA</a> / 
+                        <a href="https://www.pokemon.com/es/pokedex/palkia" target="_blank">PALKIA</a>
+                    </h3>
+                    <p><strong>Dialga</strong> (Tiempo) y <strong>Palkia</strong> (Espacio). Su dominio sobre el <strong style="color: var(--color-acento-principal);">tejido espacio-tiempo</strong> mantiene la coherencia del universo conocido.</p>
+                </div>
+                
+                <div class="data-panel-card myth-box lake-trio-box">
+                    <h3><i class="fas fa-seedling"></i> <a href="https://www.pokemon.com/es/pokedex/uxie" target="_blank">TRÍO ESPIRITUAL</a></h3>
+                    <p>Un vínculo con el entrenador: Uxie (<strong>Conocimiento</strong>), Mesprit (<strong>Emoción</strong>) y Azelf (<strong>Voluntad</strong>). </p>
+                </div>
+
+                <div class="data-panel-card myth-box giratina-box">
+                    <h3><i class="fas fa-skull"></i> <a href="https://www.pokemon.com/es/pokedex/giratina" target="_blank">GIRATINA: ANTÍTESIS</a></h3>
+                    <p>La fuerza opuesta, que encarna la <strong>Antimateria</strong>. Fue desterrado al <strong style="color: #a9a9a9;">Mundo Distorsión</strong>. </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gym-structure">
+            <h2><i class="fas fa-dungeon"></i> ESTRUCTURA DE GIMNASIOS (PROTOCOLO)</h2>
+            <p style="color: var(--color-texto-claro); font-size: 1.25em;">Pulsa en el nombre de la ciudad para acceder al informe de desafío y al equipo completo del Líder (Platinum).</p>
+
+            <div class="data-panel-grid">
+                
+                <div class="data-panel-card structure-card" id="gym-roco">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Roark#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-map-pin"></i> Ciudad Pirita (Roca)</a></strong>
+                    <p><strong>Desafío:</strong> Plataformas Elevadoras (Protocolo Secuencial). Requiere la <strong>decodificación de la secuencia</strong>. <i class="fas fa-code"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-gardenia">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Gardenia#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-leaf"></i> Ciudad Vetusta (Planta)</a></strong>
+                    <p><strong>Desafío:</strong> Laberinto Bio-Integrado. Entrenadores <strong>ocultos</strong> entre la flora. <i class="fas fa-leaf"></i></p>
+                </div>
+                
+                <div class="data-panel-card structure-card" id="gym-fantina">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Fantina#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-ghost"></i> Ciudad Corazón (Fantasma)</a></strong>
+                    <p><strong>Desafío:</strong> Mística Aritmética. Navegación con linterna sobre <strong>baldosas numéricas</strong>. <i class="fas fa-calculator"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-crasherwake">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Crasher_Wake#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-tint"></i> Ciudad Pradera (Agua)</a></strong>
+                    <p><strong>Desafío:</strong> Control de Flujo Hidráulico. Manipulación de <strong>tuberías y compuertas giratorias</strong>. <i class="fas fa-water"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-maylene">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Maylene#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-running"></i> Ciudad Rocavelo (Lucha)</a></strong>
+                    <p><strong>Desafío:</strong> Muros Deslizantes Ciegos. Requiere <strong>memorización del patrón</strong> de interruptores. <i class="fas fa-running"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-byron">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Byron#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-cog"></i> Ciudad Canal (Acero)</a></strong>
+                    <p><strong>Desafío:</strong> Plataformas de Ascensor Metálico. Uso secuencial de elevadores. <i class="fas fa-cog"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-candice">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Candice#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-icicles"></i> Ciudad Puntaneva (Hielo)</a></strong>
+                    <p><strong>Desafío:</strong> Pistas de Deslizamiento (Ice Sliding). Creación de un <strong>camino seguro</strong>. <i class="fas fa-icicles"></i></p>
+                </div>
+
+                <div class="data-panel-card structure-card" id="gym-volkner">
+                    <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Volkner#Pok.C3.A9mon_Platinum_2" target="_blank"><i class="fas fa-bolt"></i> Ciudad Marina (Eléctrico)</a></strong>
+                    <p><strong>Desafío:</strong> Puzzle de Engranajes. Se debe <strong>alinear la conexión</strong> de grandes engranajes. <i class="fas fa-charging-station"></i></p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="gym-leaders">
+            <h2><i class="fas fa-sitemap"></i> LÍDERES DE GIMNASIO (EJES TÁCTICOS)</h2>
+            <p style="color: var(--color-acento-principal); font-size: 1.25em;">Pulsa en la ciudad para ir a la descripción del desafío; en el Pokémon para ir a su Pokédex.</p>
+
+            <div class="data-panel-grid">
+                
+                <div class="gym-card">
+                    <h4>Roco (Roark)</h4>
+                    <span class="gym-type-badge type-rock"><i class="fas fa-gem badge-icon"></i> TIPO ROCA</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-roco"><strong>Pirita</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/rampardos" target="_blank"><strong>Rampardos</strong></a>. Táctica: <strong>Daño Crudo</strong>. <i class="fas fa-hammer"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Gardenia</h4>
+                    <span class="gym-type-badge type-grass"><i class="fas fa-leaf badge-icon"></i> TIPO PLANTA</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-gardenia"><strong>Vetusta</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/roserade" target="_blank"><strong>Roserade</strong></a>. Táctica: <strong>Drenaje</strong> y control. <i class="fas fa-circle-notch"></i></p>
+                </div>
+                
+                <div class="gym-card">
+                    <h4>Fantina</h4>
+                    <span class="gym-type-badge type-ghost"><i class="fas fa-ghost badge-icon"></i> TIPO FANTASMA</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-fantina"><strong>Corazón</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/mismagius" target="_blank"><strong>Mismagius</strong></a>. Táctica: <strong>Evasión</strong> y daño indirecto. <i class="fas fa-mask"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Crasher Wake</h4>
+                    <span class="gym-type-badge type-water"><i class="fas fa-tint badge-icon"></i> TIPO AGUA</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-crasherwake"><strong>Pradera</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/floatzel" target="_blank"><strong>Floatzel</strong></a>. Táctica: <strong>Velocidad</strong> y asalto rápido. <i class="fas fa-swimmer"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Maylene (Brega)</h4>
+                    <span class="gym-type-badge type-fighting"><i class="fas fa-hand-rock badge-icon"></i> TIPO LUCHA</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-maylene"><strong>Rocavelo</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/lucario" target="_blank"><strong>Lucario</strong></a>. Táctica: <strong>Prioridad</strong> y golpes críticos. <i class="fas fa-bolt"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Byron (Acerón)</h4>
+                    <span class="gym-type-badge type-steel"><i class="fas fa-gear badge-icon"></i> TIPO ACERO</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-byron"><strong>Canal</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/bastiodon" target="_blank"><strong>Bastiodon</strong></a>. Táctica: <strong>Defensa Absoluta</strong>. <i class="fas fa-shield-alt"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Candice (Inverna)</h4>
+                    <span class="gym-type-badge type-ice"><i class="fas fa-snowflake badge-icon"></i> TIPO HIELO</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-candice"><strong>Puntaneva</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/froslass" target="_blank"><strong>Froslass</strong></a>. Táctica: <strong>Control Glacial</strong>. <i class="fas fa-fan"></i></p>
+                </div>
+
+                <div class="gym-card">
+                    <h4>Volkner (Lectro)</h4>
+                    <span class="gym-type-badge type-electric"><i class="fas fa-bolt badge-icon"></i> TIPO ELÉCTRICO</span>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Ciudad: <a href="#gym-volkner"><strong>Marina</strong></a>. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/electivire" target="_blank"><strong>Electivire</strong></a>. Táctica: <strong>Potencia Cruda</strong>. <i class="fas fa-charging-station"></i></p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="league">
+            <h2><i class="fas fa-gavel"></i> LIGA POKÉMON (PROTOCOLO DE DESAFÍO)</h2>
+            <p style="font-style: italic; font-size: 1.3em; color: var(--color-acento-secundario);">El Alto Mando y la Campeona representan la cúspide de la estrategia regional.</p>
+
+            <div class="data-panel-grid">
+                
+                <div class="league-card">
+                    <h4>Aaron (Aron)</h4>
+                    <span class="gym-type-badge type-bug"><i class="fas fa-bug badge-icon"></i> ALTO MANDO: BICHO</span>
+                    <p style="margin-top: 15px;">Experto en el tipo Bicho. <a href="https://bulbapedia.bulbagarden.net/wiki/Elite_Four_member_(Sinnoh)#Platinum" target="_blank">Ver Equipo Detallado</a></p>
+                </div>
+
+                <div class="league-card">
+                    <h4>Bertha (Gaia)</h4>
+                    <span class="gym-type-badge type-ground"><i class="fas fa-globe-americas badge-icon"></i> ALTO MANDO: TIERRA</span>
+                    <p style="margin-top: 15px;">Experto en el tipo Tierra. <a href="https://bulbapedia.bulbagarden.net/wiki/Elite_Four_member_(Sinnoh)#Platinum" target="_blank">Ver Equipo Detallado</a></p>
+                </div>
+
+                <div class="league-card">
+                    <h4>Flint (Fausto)</h4>
+                    <span class="gym-type-badge type-fire"><i class="fas fa-fire badge-icon"></i> ALTO MANDO: FUEGO</span>
+                    <p style="margin-top: 15px;">Experto en el tipo Fuego. <a href="https://bulbapedia.bulbagarden.net/wiki/Elite_Four_member_(Sinnoh)#Platinum" target="_blank">Ver Equipo Detallado</a></p>
+                </div>
+
+                <div class="league-card">
+                    <h4>Lucian (Delos)</h4>
+                    <span class="gym-type-badge type-psychic"><i class="fas fa-brain badge-icon"></i> ALTO MANDO: PSÍQUICO</span>
+                    <p style="margin-top: 15px;">Experto en el tipo Psíquico. <a href="https://bulbapedia.bulbagarden.net/wiki/Elite_Four_member_(Sinnoh)#Platinum" target="_blank">Ver Equipo Detallado</a></p>
+                </div>
+                
+                <div class="data-panel-card champion-card">
+                    <h4><i class="fas fa-crown"></i> CAMPEONA CYNTHIA <i class="fas fa-crown"></i></h4>
+                    <span class="gym-type-badge type-mixed" style="font-size: 1.3em; padding: 10px 30px;"><i class="fas fa-star-of-life badge-icon"></i> TIPO MIXTO | ESTRATEGA ABSOLUTA</span>
+                    <p style="margin-top: 25px;">Estrategia basada en la **cobertura de tipos**. Pokémon Clave: <a href="https://www.pokemon.com/es/pokedex/garchomp" target="_blank"><strong>Garchomp</strong></a>. <a href="https://bulbapedia.bulbagarden.net/wiki/Cynthia#Pok.C3.A9mon_Platinum_2" target="_blank">Ver Equipo Completo</a></p>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="videojuegos">
+            <h2><i class="fas fa-gamepad"></i> PLATAFORMAS DE ACCESO (DATA FILES)</h2>
+            <p style="font-style: italic; font-size: 1.3em; color: var(--color-enlace-neongreen);">Acceso a los archivos de juego principales.</p>
+            <div class="data-panel-grid">
+                
+                <div class="data-panel-card">
+                    <h4>Diamante y Perla (DS)</h4>
+                    <p>Archivos Base (2006). <a href="https://bulbapedia.bulbagarden.net/wiki/Pokémon_Diamond_and_Pearl_Versions" target="_blank">Ver detalles.</a></p>
+                </div>
+
+                <div class="data-panel-card">
+                    <h4>Pokémon Platino (DS)</h4>
+                    <p>Archivo de Expansión (2008). Introduce el Mundo Distorsión. <strong><a href="https://bulbapedia.bulbagarden.net/wiki/Pokémon_Platinum_Version" target="_blank">El canon de Sinnoh.</a></strong></p>
+                </div>
+                
+                <div class="data-panel-card">
+                    <h4>Leyendas: Arceus (Switch)</h4>
+                    <p>Archivo Temporal (2022). Precuela histórica en Hisui. <a href="https://bulbapedia.bulbagarden.net/wiki/Pokémon_Legends:_Arceus" target="_blank">Ver detalles.</a></p>
+                </div>
+
+                <div class="data-panel-card">
+                    <h4>Brillante Diamante / Perla Reluciente (Switch)</h4>
+                    <p>Archivos Remasterizados (2021). <a href="https://bulbapedia.bulbagarden.net/wiki/Pokémon_Brilliant_Diamond_and_Shining_Pearl" target="_blank">Ver detalles.</a></p>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="starters">
+            <h2><i class="fas fa-microchip"></i> INICIALES DE SINNOH (MÓDULO DE SELECCIÓN)</h2>
+            <p style="font-style: italic; font-size: 1.3em; color: var(--color-acento-principal);">La triada de Sinnoh completa la tipología de Hojas/Fuego/Agua, con evoluciones complejas.</p>
+            
+            <div class="data-panel-grid">
+                
+                <div class="data-panel-card starter-card">
+                    <h4>T-001 | <a href="https://www.pokemon.com/es/pokedex/turtwig" target="_blank">TURTWIG</a> <i class="fas fa-seedling"></i></h4>
+                    <span class="starter-type-badge type-grass-starter">Tipo Inicial: Planta</span>
+                    <p>Evolución 1: Grotle</p>
+                    <p class="evolution-line">Evolución Final: <a href="https://www.pokemon.com/es/pokedex/torterra" target="_blank">TORTERRA (Planta/Tierra)</a></p>
+                    <p style="margin-top: 10px;"><i class="fas fa-balance-scale"></i> Debilidades Críticas: Hielo (x4).</p>
+                </div>
+
+                <div class="data-panel-card starter-card">
+                    <h4>C-001 | <a href="https://www.pokemon.com/es/pokedex/chimchar" target="_blank">CHIMCHAR</a> <i class="fas fa-fire"></i></h4>
+                    <span class="starter-type-badge type-fire-starter">Tipo Inicial: Fuego</span>
+                    <p>Evolución 1: Monferno</p>
+                    <p class="evolution-line">Evolución Final: <a href="https://www.pokemon.com/es/pokedex/infernape" target="_blank">INFERNAPE (Fuego/Lucha)</a></p>
+                    <p style="margin-top: 10px;"><i class="fas fa-balance-scale"></i> Debilidades Clave: Agua, Tierra, Volador, Psíquico.</p>
+                </div>
+
+                <div class="data-panel-card starter-card">
+                    <h4>P-001 | <a href="https://www.pokemon.com/es/pokedex/piplup" target="_blank">PIPLUP</a> <i class="fas fa-tint"></i></h4>
+                    <span class="starter-type-badge type-water-starter">Tipo Inicial: Agua</span>
+                    <p>Evolución 1: Prinplup</p>
+                    <p class="evolution-line">Evolución Final: <a href="https://www.pokemon.com/es/pokedex/empoleon" target="_blank">EMPOLEON (Agua/Acero)</a></p>
+                    <p style="margin-top: 10px;"><i class="fas fa-balance-scale"></i> Debilidades Clave: Lucha, Tierra (x4), Eléctrico.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>SINNOH REGIONAL | PROTOCOLO CÓSMICO INICIADO. <i class="fas fa-power-off"></i></p>
+        <p>Maksym Borrell Jimenez</p>
+    </footer>
+    
+   
+</body>
+</html>
