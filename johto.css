@@ -1,77 +1,88 @@
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
+       /* Estilos básicos del cuerpo de la página (fuentes, márgenes y fondo) */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-        header {
-            background-color: #ef5350;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
+/* Apariencia del encabezado principal */
+header {
+    background-color: #ef5350;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-        nav {
-            background-color: transparent;
-            padding: 10px;
-            text-align: center;
-        }
+/* Estilo general del menú de navegación */
+nav {
+    background-color: transparent;
+    padding: 10px;
+    text-align: center;
+}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-        }
+/* Apariencia de los enlaces del menú */
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
 
-    
-        .center-wrapper {
-            width: 33%;
-            max-width: 720px;
-            min-width: 260px;
-            margin: 24px auto;
-            padding: 18px 22px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-            text-align: left;
-        }
-            nav ul {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                padding: 0;
-                margin: 0;
-            }
-            nav ul li {
-                margin: 8px;
-                list-style: none;
-            }
+/* Contenedor central que agrupa el contenido y lo presenta en forma de tarjeta */
+.center-wrapper {
+    width: 33%;
+    max-width: 720px;
+    min-width: 260px;
+    margin: 24px auto;
+    padding: 18px 22px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    text-align: left;
+}
 
-        .contenedor {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+/* Organización del menú en formato flexible y centrado */
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
 
-        h2 {
-            color: #d32f2f;
-        }
+/* Elementos individuales del menú */
+nav ul li {
+    margin: 8px;
+    list-style: none;
+}
 
-        img {
-            width: 100%;
-            margin-top: 15px;
-            border-radius: 10px;
-        }
+/* Contenedor secundario para secciones amplias de contenido */
+.contenedor {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-        footer {
-            margin-top: 30px;
-            background-color: #ef5350;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    
+/* Color general para títulos de secciones */
+h2 {
+    color: #d32f2f;
+}
+
+/* Estilo estándar para imágenes dentro del contenido */
+img {
+    width: 100%;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+/* Apariencia del pie de página */
+footer {
+    margin-top: 30px;
+    background-color: #ef5350;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
