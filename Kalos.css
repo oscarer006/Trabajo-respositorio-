@@ -1,43 +1,50 @@
 body {
+    /* Fuente general y reset basico */
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #6d5959;
 
+    /* Color de fondo de toda la pagina */
+    background-color: #6d5959;
 }
 
 header {
+    /* Fondo y color del titulo */
     background-color: #aa7b7b;
-    color: rgb(255, 255, 255);
+    color: white;
+
+    /* Espaciado interno y centrado */
     padding: 20px;
     text-align: center;
-    margin-top: 0;
 }
 
 nav {
+    /* Barra de navegacion */
     background-color: #4b0e0e;
     padding: 10px;
     text-align: center;
-
 }
 
 nav a {
+    /* Enlaces dentro del nav */
     color: white;
     text-decoration: none;
     margin: 0 15px;
     font-weight: bold;
-    
 }
 
 .cuadro {
+    /* Contenedor principal que agrupa los bloques */
     max-width: 900px;
-    margin: 20px auto;
+    margin: 20px auto; /* Centrado */
     padding: 20px;
     background: #ebb8b8;
     border-radius: 15px;
     border: 4px solid #000000;
 }
+
 .cuadro2 {
+    /* Bloques internos de informacion */
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
@@ -46,40 +53,44 @@ nav a {
     border: 3px solid #0b1544;
 }
 
-
 h2 {
+    /* Estilo de los subtitulos */
     color: #d32f2f;
     text-align: center;
     margin-top: 0;
-    
 }
 
 img {
+    /* Ajuste de imagenes si las usas */
     width: 100%;
     margin-top: 15px;
     border-radius: 10px;
 }
 
 footer {
+    /* Pie de pagina */
     margin-top: 30px;
     background-color: #ef5350;
     color: white;
     text-align: center;
     padding: 10px;
-
 }
-a{
-  color: #ffffff;
+
+a {
+    /* Estilo general de los enlaces */
+    color: white;
     text-decoration: none;
     font-weight: bold;
+
+    /* Boton visual */
     display: inline-block;
     padding: 10px 20px;
     border-radius: 5px; 
     background-color: #4b0e0e;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease; /* Animacion suave al pasar el raton */
 }
 
 a:hover {
+    /* Efecto hover */
     background-color: #6b1a1a;
-
 }
